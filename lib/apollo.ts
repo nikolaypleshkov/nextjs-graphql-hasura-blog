@@ -4,7 +4,7 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 const apolloClient = new ApolloClient({
     uri: "https://fine-wasp-91.hasura.app/v1/graphql",
     headers: {
-        "x-hasura-admin-secret": "Z0GnHTKZR2w3YFWreBuSpTc8wb9m66I00xRlaO9UZiMeFvsV8ehx53jb14AWo3aB"
+        "x-hasura-admin-secret": process.env.NEXT_PUBLIC_HASURA_ADMIN_SECRET!
     },
     cache: new InMemoryCache()
 });
