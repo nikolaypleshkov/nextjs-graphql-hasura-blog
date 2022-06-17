@@ -1,50 +1,9 @@
 import { gql, useQuery } from "@apollo/client";
-import { Grid, Typography } from "@mui/material";
+import { CircularProgress, Grid, Typography } from "@mui/material";
 import React, { useState } from "react";
 import BlogCard from "../components/BlogCard";
 import apolloClient from "../lib/apollo";
 import { useTopBlogsStyles } from "../shared/styles";
-
-const posts = [
-  {
-    id: "p_01",
-    title: "Learn Next.js + Typscript 🚀",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-  {
-    id: "p_02",
-    title: "Learn GraphQL and Apollo Client",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-  {
-    id: "p_03",
-    title: "Learn Hasura",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-  {
-    id: "p_04",
-    title: "Learn GraphQL and Apollo Client",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-
-  {
-    id: "p_05",
-    title: "Learn GraphQL and Apollo Client",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-
-  {
-    id: "p_06",
-    title: "Learn GraphQL and Apollo Client",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-];
 
 const ALL_BLOGS = gql`
   query GetAllPost {
@@ -78,16 +37,27 @@ const TopBlogs = () => {
             spacing={{ xs: 2, md: 3 }}
             columns={{ xs: 4, sm: 8, md: 12 }}
           >
-            {posts.map((post: any) => (
+            {loading ? <Loading /> : posts.map((post: any) => (
               <Grid item xs={2} sm={4} md={4} key={post.id}>
                 <BlogCard id={post.id} title={post.title} description={post.description} />
               </Grid>
-            ))}
+            )) }
           </Grid>
         </main>
       </div>
     </section>
   );
 };
+
+function Loading(){
+  return (
+    <div style={{
+      width: "100%",
+      textAlign: "center"
+    }}>
+       <CircularProgress />
+    </div>
+  )
+}
 
 export default TopBlogs;
