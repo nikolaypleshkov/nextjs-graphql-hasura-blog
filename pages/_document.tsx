@@ -2,7 +2,7 @@ import * as React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 
-import createEmotionCache from '../utility/createEmotionCache';
+import createEmotionCache from '../src/utils/createEmotionCache';
 
 export default class MyDocument extends Document {
   render() {
@@ -13,6 +13,8 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
+          <meta name="title" content="Blog App - Create best blogs with the best blogging platform" />
+          <meta name="description" content="Best app for blogging builded with Next.js, GraphQL and Hasura" />
         </Head>
         <body>
           <Main />

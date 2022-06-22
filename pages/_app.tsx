@@ -8,38 +8,45 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-import createEmotionCache from "../utility/createEmotionCache";
+import createEmotionCache from "../src/utils/createEmotionCache";
 import lightThemeOptions from "../styles/lightThemeOptions";
 import "../styles/globals.css";
-import Layout from "../components/Layout";
+import Layout from "../src/components/root/Layout";
+
+import { StylesProvider, createGenerateClassName } from "@mui/styles";
+
+import { ApolloProvider } from "@apollo/client";
+import apolloClient from "../src/lib/apollo";
+import { ProvideAuth } from "../src/utils/auth";
+
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
 const clientSideEmotionCache = createEmotionCache();
-
 const lightTheme = createTheme(lightThemeOptions);
-import { StylesProvider, createGenerateClassName } from "@mui/styles";
-import { ApolloProvider } from "@apollo/client";
-import apolloClient from "../lib/apollo";
+
 const generateClassName = createGenerateClassName({
   productionPrefix: "c",
 });
+
 const MyApp: React.FunctionComponent<MyAppProps> = (props) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
   return (
     <ApolloProvider client={apolloClient}>
-      <CacheProvider value={emotionCache}>
-        <StylesProvider generateClassName={generateClassName}>
-          <ThemeProvider theme={lightTheme}>
-            <CssBaseline />
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </ThemeProvider>
-        </StylesProvider>
-      </CacheProvider>
+      <ProvideAuth>
+        <CacheProvider value={emotionCache}>
+          <StylesProvider generateClassName={generateClassName}>
+            <ThemeProvider theme={lightTheme}>
+              <CssBaseline />
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </ThemeProvider>
+          </StylesProvider>
+        </CacheProvider>
+      </ProvideAuth>
     </ApolloProvider>
   );
 };

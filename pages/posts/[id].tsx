@@ -1,10 +1,9 @@
 import { gql } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import apolloClient from "../../lib/apollo";
+import apolloClient from "../../src/lib/apollo";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import { Button } from "@mui/material";
-import MarkDown from "../../components/MarkDown";
 
 const ALL_BLOGS = gql`
   query GetAllPost {
@@ -62,7 +61,6 @@ const Post = ({ post }: any) => {
             </StyledLink>
           </div>
         </DetailRow>
-        <MarkDown content={postInfo.blog_app_post_by_pk.description} />
       </TrackDetails>
     </div>
   ) : (
@@ -78,8 +76,6 @@ export async function getStaticPaths() {
     params: { id: post.id.toString() },
   }));
 
-  console.log(paths);
-
   return {
     paths: paths,
     fallback: true,
@@ -87,17 +83,11 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: any) {
-  console.log("here bro");
-
-  console.log(params.id);
 
   const { data } = await apolloClient.query({
     query: GET_POST_BY_ID,
     variables: { id: parseInt(params.id) },
   });
-
-  console.log("data");
-  console.log(data);
 
   return {
     props: {
