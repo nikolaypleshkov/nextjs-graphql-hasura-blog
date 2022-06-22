@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 import React from "react";
-import { useBannerStyles } from "../shared/styles";
+import { useBannerStyles } from "../../shared/styles";
 const BannerSection = () => {
   const classes = useBannerStyles();
   return (

@@ -1,9 +1,9 @@
 import { gql, useQuery } from "@apollo/client";
 import { CircularProgress, Grid, Typography } from "@mui/material";
 import React, { useState } from "react";
-import BlogCard from "../components/BlogCard";
-import apolloClient from "../lib/apollo";
-import { useTopBlogsStyles } from "../shared/styles";
+import { PostCard } from "../atoms";
+import apolloClient from "../../lib/apollo";
+import { useTopBlogsStyles } from "../../shared/styles";
 
 const ALL_BLOGS = gql`
   query GetAllPost {
@@ -39,7 +39,7 @@ const TopBlogs = () => {
           >
             {loading ? <Loading /> : posts.map((post: any) => (
               <Grid item xs={2} sm={4} md={4} key={post.id}>
-                <BlogCard id={post.id} title={post.title} description={post.description} />
+                <PostCard id={post.id} title={post.title} description={post.description} />
               </Grid>
             )) }
           </Grid>
